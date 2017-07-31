@@ -1,0 +1,5 @@
+app\model\User.class
+app\controller\IndexController.class
+app\model\dao\UserDao.class
+app\util\EntityManagerBuilder.class
+app\model\dao\impl\UserDaoImpl.class

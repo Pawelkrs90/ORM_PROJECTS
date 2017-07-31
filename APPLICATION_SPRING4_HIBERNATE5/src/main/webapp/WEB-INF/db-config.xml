@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+        <!--Konfiguracja dostepu do bazy -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+            <property name="url" value="jdbc:mysql://localhost:3306/hibernate5?zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;requireSSL=false&amp;useTimezone=true&amp;serverTimezone=GMT" />
+            <property name="username" value="root" />
+            <property name="password" value="root" />
+	</bean>
+
+        <!-- Konfiguracja Hibernate --> 
+	<bean id="HibernateSessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+            <property name="dataSource" ref="dataSource" />
+            <property name="packagesToScan" value="app.model"></property> 
+            <property name="hibernateProperties">
+                <props>
+                    <prop key="hibernate.current_session_context_class">thread</prop>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                    <prop key="hibernate.show_sql">true</prop> 
+                    <prop key="hibernate.format_sql">false</prop>
+                    <prop key="hibernate.hbm2ddl.auto">update</prop>
+                    
+                    <!-- Pool Connection Configuration -->
+                    <prop key="hibernate.c3p0.min_size">5</prop> <!-- Minimum number of JDBC connections in the pool. Hibernate default: 1 -->
+                    <prop key="hibernate.c3p0.max_size">20</prop> <!-- Maximum number of JDBC connections in the pool. Hibernate default: 100 -->
+                    <prop key="hibernate.c3p0.timeout">300</prop> <!-- When an idle connection is removed from the pool (in second). Hibernate default: 0, never expire. -->
+                    <prop key="hibernate.c3p0.max_statements">50</prop> <!-- Number of prepared statements will be cached. Increase performance. Hibernate default: 0 , caching is disable. -->
+                    <prop key="hibernate.c3p0.idle_test_period">3000</prop> <!-- idle time in seconds before a connection is automatically validated. Hibernate default: 0 -->
+                </props>
+            </property>
+	</bean>
+
+        <!-- Transaction Manager -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+        
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+            <property name="sessionFactory" ref="HibernateSessionFactory" />
+        </bean>
+
+        <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+            <constructor-arg name="sessionFactory" ref="HibernateSessionFactory"/>  
+	</bean>	
+        
+        <!-- konfigiracja DAO i Services -->
+        <bean id="userDao" class="app.model.dao.impl.UserDaoImpl">
+            <property name="sessionFactory" ref="HibernateSessionFactory" />
+	</bean>
+        
+	<bean id="userDaoService" class="app.service.impl.UserDaoServiceImpl">
+            <property name="userDao" ref="userDao"></property>
+	</bean>
+        
+</beans>
