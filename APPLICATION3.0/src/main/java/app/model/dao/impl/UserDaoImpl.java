@@ -16,16 +16,18 @@ public class UserDaoImpl implements UserDao<User>{
     
     @Inject
     private EntityManager entityManager;// = EntityManagerBuilder.getEntityManager();
-
+    EntityTransaction transaction;
+    
     @Override
     public void save(User user) {
         System.out.println("DAO - SAVE");
-       /* EntityTransaction transaction = entityManager.getTransaction();
+        System.out.println(user);
+        transaction = entityManager.getTransaction();
         transaction.begin();
 
         entityManager.persist(user);
         
-        transaction.commit();*/
+        transaction.commit();
    }
 
     @Override

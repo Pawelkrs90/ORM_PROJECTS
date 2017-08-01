@@ -26,6 +26,7 @@ public class IndexController implements Serializable{
         System.out.println("testMethod");
         
         User user = new User("ADMIN", "dasdfdsdasd");
+        System.out.println(user);
         
         userDaoService.save(user);
         
