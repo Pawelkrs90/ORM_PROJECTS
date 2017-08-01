@@ -3,6 +3,7 @@ package app.model.dao.impl;
 import app.model.User;
 import app.model.dao.UserDao;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
@@ -18,10 +19,14 @@ public class UserDaoImpl implements UserDao<User>{
     private EntityManager entityManager;// = EntityManagerBuilder.getEntityManager();
     EntityTransaction transaction;
     
+    @Inject
+    private Logger logger;
+    
     @Override
     public void save(User user) {
         System.out.println("DAO - SAVE");
         System.out.println(user);
+        
         transaction = entityManager.getTransaction();
         transaction.begin();
 

@@ -20,13 +20,8 @@ public class UserDaoServiceImpl implements UserDaoService<User>{
    @Default
    private UserDao<User> userDao;
     
-   // @Inject
-   // private Event<User> event;
-    
     @Override
     public void save(User user) {
-        System.out.println("SERVICE - SAVE");
-       // event.fire(user); //???
         userDao.save(user);
     }
 
