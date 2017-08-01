@@ -16,16 +16,16 @@ public class UserDaoImpl implements UserDao<User>{
     
     @Inject
     private EntityManager entityManager;// = EntityManagerBuilder.getEntityManager();
-    private EntityTransaction transaction;
 
     @Override
     public void save(User user) {
-        transaction = entityManager.getTransaction();
+        System.out.println("DAO - SAVE");
+       /* EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
         entityManager.persist(user);
         
-        transaction.commit();
+        transaction.commit();*/
    }
 
     @Override
@@ -35,14 +35,15 @@ public class UserDaoImpl implements UserDao<User>{
 
     @Override
     public User getUserById(int id) {
-        transaction = entityManager.getTransaction();
+     /*   EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
     
         User user = entityManager.find(User.class, id);
         
         transaction.commit();
         
-        return user;
+        return user;*/
+        return null;
     }
 
     @Override
@@ -52,7 +53,7 @@ public class UserDaoImpl implements UserDao<User>{
 
     @Override
     public List<User> getUserList() {
-        transaction = entityManager.getTransaction();
+       /* EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         List<User> userList;
         
@@ -68,7 +69,7 @@ public class UserDaoImpl implements UserDao<User>{
         finally{
             entityManager.close();
         }
- 
+        */
         return null;
     }
 

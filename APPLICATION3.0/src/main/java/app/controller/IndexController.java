@@ -25,15 +25,15 @@ public class IndexController implements Serializable{
         
         System.out.println("testMethod");
         
-        User user = new User("xxxx", "dasdasd");
+        User user = new User("ADMIN", "dasdfdsdasd");
         
-        //userDaoService.save(user);
+        userDaoService.save(user);
         
-         List<User> userList  = userDaoService.getUserList();
+      /*   List<User> userList  = userDaoService.getUserList();
          if(userList != null || !userList.isEmpty()){
             userList.forEach(System.out::println);
          }
-        
+        */
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "SUcces", "Udao Się");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
