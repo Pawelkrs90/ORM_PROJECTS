@@ -19,19 +19,15 @@ public class UserDaoImpl implements UserDao<User>{
     private EntityManager entityManager;// = EntityManagerBuilder.getEntityManager();
     EntityTransaction transaction;
     
-    @Inject
-    private Logger logger;
+   // @Inject
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
     
     @Override
-    public void save(User user) {
-        System.out.println("DAO - SAVE");
-        System.out.println(user);
-        
+    public void save(User user) { 
+        logger.info("dao - save");
         transaction = entityManager.getTransaction();
         transaction.begin();
-
         entityManager.persist(user);
-        
         transaction.commit();
    }
 
@@ -42,14 +38,15 @@ public class UserDaoImpl implements UserDao<User>{
 
     @Override
     public User getUserById(int id) {
-     /*   EntityTransaction transaction = entityManager.getTransaction();
+        transaction = entityManager.getTransaction();
         transaction.begin();
-    
         User user = entityManager.find(User.class, id);
-        
         transaction.commit();
         
-        return user;*/
+        if(user==null){
+            return user; 
+        }
+
         return null;
     }
 
